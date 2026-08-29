@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(cuid())
+  email          String         @unique
+  name           String?
+  organizationId String?
+  organization   Organization?  @relation(fields: [organizationId], references: [id])
+  campaigns      Campaign[]
+  leads          Lead[]         @relation("LeadOwner")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Organization {
+  id          String      @id @default(cuid())
+  name        String
+  users       User[]
+  properties  Property[]
+  leads       Lead[]
+  campaigns   Campaign[]
+  content     ContentAsset[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Property {
+  id             String        @id @default(cuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  title          String
+  address        String
+  price          Decimal       @db.Decimal(12, 2)
+  status         String        @default("draft")
+  campaigns      Campaign[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Lead {
+  id             String        @id @default(cuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  ownerId        String?
+  owner          User?         @relation("LeadOwner", fields: [ownerId], references: [id])
+  fullName       String
+  email          String?
+  phone          String?
+  source         String?
+  stage          String        @default("new")
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Campaign {
+  id             String        @id @default(cuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  creatorId      String?
+  creator        User?         @relation(fields: [creatorId], references: [id])
+  propertyId     String?
+  property       Property?     @relation(fields: [propertyId], references: [id])
+  name           String
+  channel        String
+  status         String        @default("draft")
+  budget         Decimal?      @db.Decimal(10, 2)
+  assets         ContentAsset[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model ContentAsset {
+  id             String        @id @default(cuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  campaignId     String?
+  campaign       Campaign?     @relation(fields: [campaignId], references: [id])
+  type           String
+  title          String
+  body           String
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model BayAreaDailySignal {
+  id               String    @id @default(cuid())
+  signalDate       DateTime  @unique
+  hiringScore      Float
+  ipoScore         Float
+  techMarketScore  Float
+  moneyInflowIndex Float
+  hiringRaw        Json?
+  ipoRaw           Json?
+  techRaw          Json?
+  sourceStatus     Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model RealEstateSnapshot {
+  id            String   @id @default(cuid())
+  snapshotAt    DateTime @default(now())
+  summary       String
+  sourceStatus  Json?
+  opportunities Json?
+  rawPayload    Json?
+  createdAt     DateTime @default(now())
+
+  @@index([snapshotAt(sort: Desc)])
+}

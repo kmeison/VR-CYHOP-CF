@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Next Dev Server",
+			"type": "shell",
+			"command": "export PATH=\"$HOME/.local/node20/bin:$PATH\" && npm run dev",
+			"isBackground": true,
+			"group": "build"
+		}
+	]
+}

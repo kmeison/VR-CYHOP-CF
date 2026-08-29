@@ -1,0 +1,47 @@
+import Link from "next/link";
+import { ReactNode } from "react";
+
+const investorLinks = [
+  { href: "/#overview", label: "Overview" },
+  { href: "/#about", label: "About" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/team", label: "Team" },
+  { href: "/story", label: "Story" },
+  { href: "/offering", label: "Offering" },
+];
+
+type NavShellProps = {
+  children: ReactNode;
+};
+
+export function NavShell({ children }: NavShellProps) {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#03060c] via-[#070e1b] to-[#0b1426] text-white">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#070e1b]/80 backdrop-blur">
+        <div className="mx-auto max-w-6xl px-6 py-4">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <Link href="/" className="text-lg font-semibold tracking-tight text-white">
+                CYHOP / Virtue Reality
+              </Link>
+              <p className="mt-1 max-w-2xl text-xs text-white/60">
+                Investor story on-brand. Transaction flow on the regulated intermediary.
+              </p>
+            </div>
+            <div className="text-sm">
+              <nav className="flex flex-wrap gap-4 font-medium">
+                {investorLinks.map((link) => (
+                  <Link key={link.href} href={link.href} className="text-white/80 hover:text-cyan">
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
+    </div>
+  );
+}
