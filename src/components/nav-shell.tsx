@@ -25,9 +25,6 @@ export function NavShell({ children }: NavShellProps) {
               <Link href="/" className="text-lg font-semibold tracking-tight text-white">
                 CYHOP / Virtue Reality
               </Link>
-              <p className="mt-1 max-w-2xl text-xs text-white/60">
-                Investor story on-brand. Transaction flow on the regulated intermediary.
-              </p>
             </div>
             <div className="text-lg">
               <nav className="flex flex-wrap gap-4 font-medium">
