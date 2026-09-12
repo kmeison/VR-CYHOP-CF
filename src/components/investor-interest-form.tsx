@@ -48,7 +48,7 @@ export function InvestorInterestForm({
       }
 
       event.currentTarget.reset();
-      setMessage("Thanks — your non-binding interest has been captured and routed to the team.");
+      setMessage("Thank you. We will be in touch!");
     } catch {
       setError("Network error. Please try again or reach out directly.");
     } finally {
@@ -58,6 +58,16 @@ export function InvestorInterestForm({
 
   return (
     <form className="grid gap-3 md:grid-cols-2" onSubmit={handleSubmit}>
+      {message ? (
+        <div className="rounded-xl border border-emerald-600/30 bg-emerald-500/10 p-4 text-center md:col-span-2">
+          <p className="text-base font-semibold text-emerald-800">
+            Thank you. We will be in touch!
+          </p>
+          <p className="mt-1 text-xs text-emerald-700">
+            Your interest has been received by the team.
+          </p>
+        </div>
+      ) : null}
       <input
         className="rounded-lg border border-black/15 bg-white px-3 py-2 text-obsidian placeholder:text-obsidian/40 focus:border-obsidian focus:outline-none"
         name="fullName"
@@ -104,11 +114,6 @@ export function InvestorInterestForm({
       <p className="text-xs text-obsidian/65 md:col-span-2">
         This is a non-binding interest form. No investment commitment is accepted on this site.
       </p>
-      {message ? (
-        <div className="rounded-lg bg-emerald-50 p-3 text-sm font-medium text-emerald-800 md:col-span-2">
-          {message}
-        </div>
-      ) : null}
       {error ? (
         <div className="rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700 md:col-span-2">
           {error}
