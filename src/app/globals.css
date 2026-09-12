@@ -17,3 +17,17 @@ body {
 a {
   @apply transition-colors;
 }
+
+@keyframes why-now-caption-scroll {
+  from {
+    transform: translateX(100vw);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.why-now-caption {
+  animation: why-now-caption-scroll 32s linear infinite;
+}

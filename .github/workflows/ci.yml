@@ -22,11 +22,6 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Generate Prisma client
-        run: npm run prisma:generate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/black_harmony
-
       - name: Typecheck
         run: npm run typecheck
 

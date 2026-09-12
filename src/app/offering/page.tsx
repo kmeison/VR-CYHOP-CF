@@ -20,7 +20,7 @@ export default function OfferingPage() {
             offering page. No money is being solicited and no investment commitment is accepted here.
           </p>
           <div className="mt-5">
-            <InvestorInterestForm />
+            <InvestorInterestForm page="/offering" source="offering-page" />
           </div>
         </article>
 

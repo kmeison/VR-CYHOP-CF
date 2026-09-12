@@ -10,7 +10,6 @@
 - `/architecture` — reference architecture and boundary map
 - `/launch-path` — rollout milestones and launch checklist
 - `/compliance` — allowed vs restricted content boundaries
-- Internal operator surfaces: `/dashboard`, `/campaigns`, `/leads`, `/content-studio`, `/marketing-calendar`, `/agent-cmo`, `/predictive-scout`, `/properties`, `/settings`
 
 ## Recommended Reg CF Pattern
 
@@ -22,5 +21,4 @@
 
 1. Keep the public site narrative-first and non-binding.
 2. Route all investment CTAs to the intermediary.
-3. Preserve the internal operator tools for campaign and launch coordination.
-4. Freeze all claims against the approved source-of-truth before launch.
+3. Freeze all claims against the approved source-of-truth before launch.

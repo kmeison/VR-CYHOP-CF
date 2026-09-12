@@ -87,7 +87,7 @@ export default function ArchitecturePage() {
           </article>
           <article className="rounded-xl border border-black/10 p-4">
             <h3 className="font-semibold">Compliance</h3>
-            <p className="mt-1 text-sm text-obsidian/75">The guardrails, do/don't rules, and approval gate for public content.</p>
+            <p className="mt-1 text-sm text-obsidian/75">The guardrails, do/don&apos;t rules, and approval gate for public content.</p>
           </article>
           <article className="rounded-xl border border-black/10 p-4">
             <h3 className="font-semibold">Operator Tools</h3>

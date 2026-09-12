@@ -3,12 +3,12 @@ import { ReactNode } from "react";
 
 const investorLinks = [
   { href: "/#overview", label: "Overview" },
-  { href: "/#about", label: "About" },
-  { href: "/#how-it-works", label: "How it works" },
-  { href: "/#faq", label: "FAQ" },
   { href: "/team", label: "Team" },
-  { href: "/story", label: "Story" },
-  { href: "/offering", label: "Offering" },
+  { href: "/problem", label: "The Problem" },
+  { href: "/solution", label: "The Solution" },
+  { href: "/why-now", label: "Why Now?" },
+  { href: "/cyhop-concept", label: "CYHOP Concept" },
+  { href: "/investor-next-steps", label: "The Offering" },
 ];
 
 type NavShellProps = {
@@ -29,7 +29,7 @@ export function NavShell({ children }: NavShellProps) {
                 Investor story on-brand. Transaction flow on the regulated intermediary.
               </p>
             </div>
-            <div className="text-sm">
+            <div className="text-lg">
               <nav className="flex flex-wrap gap-4 font-medium">
                 {investorLinks.map((link) => (
                   <Link key={link.href} href={link.href} className="text-white/80 hover:text-cyan">

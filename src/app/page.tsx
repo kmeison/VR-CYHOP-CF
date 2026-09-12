@@ -1,146 +1,111 @@
 import Image from "next/image";
 import Link from "next/link";
 import { NavShell } from "@/components/nav-shell";
+import { OverviewSizzleVideo } from "@/components/overview-sizzle-video";
 import { faqItems } from "@/lib/investor-content";
 
 const howItWorks = [
   {
     step: "01",
     title: "The Mission",
-    detail: "Understand the CYHOP story: why safer digital experiences matter, how Virtue Reality builds the technology, and why the movement matters now.",
+    detail:
+      "CYHOP begins with a simple but urgent idea: digital experiences should be safer, healthier, and more intentional. Virtue Reality is building the infrastructure and culture to make online participation more trustworthy, transparent, and community-centered. This mission reaches beyond gaming into social platforms, creator economies, education, and digital commerce.",
   },
   {
     step: "02",
     title: "The Movement",
-    detail: "Follow the community, team, and story layer as the brand builds narrative momentum and keeps investors aligned with the mission.",
+    detail:
+      "The movement is built by people who believe the next generation of digital culture should be designed with values, not just engagement metrics. CYHOP is not just a product; it is a community-driven effort to create a better digital environment where participation is more meaningful and accountability is built in. This social momentum matters across gaming and adjacent digital ecosystems.",
   },
   {
     step: "03",
     title: "The Disclosure",
-    detail: "Review the formal offering materials, legal disclosures, and regulated intermediary information before making any decision.",
+    detail:
+      "To turn story into trust, CYHOP must be transparent about what it is, what it is not, and how the offering works. The disclosure phase is where mission becomes integrity: clear information, investor education, legal compliance, and a disciplined path to capital. Credibility is a competitive advantage in gaming and beyond.",
   },
   {
     step: "04",
     title: "The Commitment",
-    detail: "If the offering is live, complete the investment through the regulated broker-dealer or funding portal—not on this issuer-owned site.",
+    detail:
+      "The final step is action. If the offering is live, participation happens through the regulated intermediary—not on this issuer-owned site. This is where the mission becomes a disciplined investment path: informed participation, compliance-first execution, and a clear handoff to the proper financial channel. It connects the story to responsible capital formation and broad digital trust.",
   },
 ];
 
 export default function HomePage() {
   return (
     <NavShell>
+      <div className="mb-6">
+        <h1 className="text-4xl font-semibold tracking-tight text-[#d77bff] sm:text-5xl">OVERVIEW</h1>
+      </div>
+
+      <div className="mb-8 overflow-hidden rounded-[26px] border border-white/10 bg-slate-950/60 shadow-[0_20px_60px_rgba(2,6,23,0.35)]">
+        <OverviewSizzleVideo src="/media/VR SIZZLE-2025.mp4" />
+      </div>
+
       <section
         className="overflow-hidden rounded-[32px] border border-cyan-400/15 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),transparent_28%),linear-gradient(180deg,rgba(7,14,27,0.98),rgba(3,6,12,0.98))] p-8 text-white shadow-[0_32px_90px_rgba(0,0,0,0.4)] lg:p-12"
         id="overview"
       >
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">
-              CYHOP / Virtue Reality
+        <div className="-mx-4 -mt-4 grid gap-8 bg-[#10051f] px-4 py-10 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-10 lg:px-10">
+          <div className="max-w-xl">
+            <p className="text-lg font-bold uppercase tracking-[0.08em] text-[#d946ef] sm:text-xl">Virtue Reality</p>
+            <h2 className="mt-6 max-w-[12ch] text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl">
+              The Game Changed. We Are Changing It Back.
+            </h2>
+            <p className="mt-8 max-w-md text-2xl leading-tight text-purple-100 sm:text-3xl">
+              We&apos;re building the first platform agnostic AI safety layer for gaming.
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-tight tracking-tight lg:text-6xl">
-              Building a safer digital future for players, families, and the communities around them.
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-              Virtue Reality is the company. CYHOP is the movement. This site tells the story, frames the opportunity, and
-              routes any live investment action to the regulated intermediary.
+            <p className="mt-12 max-w-lg text-xl font-bold leading-tight text-white sm:text-2xl">
+              Protecting children, families, gamers, creators, and businesses with governed AI.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/offering" className="rounded-lg bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950">
-                View Offering Path
-              </Link>
-              <Link href="#how-it-works" className="rounded-lg border border-white/20 px-5 py-3 text-sm font-semibold text-white">
-                Learn more
-              </Link>
-              <Link href="/team" className="rounded-lg border border-white/20 px-5 py-3 text-sm font-semibold text-white">
-                Meet the team
-              </Link>
-            </div>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">Focus</p>
-                <p className="mt-2 text-sm text-slate-200">Safer online experiences</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">Model</p>
-                <p className="mt-2 text-sm text-slate-200">Brand-led, compliant handoff</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">Stage</p>
-                <p className="mt-2 text-sm text-slate-200">Launch preparation</p>
-              </div>
-            </div>
           </div>
 
-          <article className="rounded-[28px] border border-white/10 bg-slate-950/70 p-6 shadow-[0_18px_50px_rgba(2,6,23,0.45)] backdrop-blur">
-            <p className="text-xs uppercase tracking-[0.24em] text-slate-400">At a glance</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">A premium investor overview.</h2>
-            <p className="mt-3 text-sm leading-7 text-slate-300">
-              The page is structured to feel like a concise Republic-style introduction: one strong narrative, a clean
-              handoff, and a clear path to the official offering materials.
-            </p>
-            <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-white/50">Mission</p>
-                <p className="mt-1 font-medium text-white">Safer digital spaces</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-white/50">Structure</p>
-                <p className="mt-1 font-medium text-white">Story first, offering second</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-white/50">Products</p>
-                <p className="mt-1 font-semibold text-white">Sentinel, Guardian</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-white/50">Status</p>
-                <p className="mt-1 font-semibold text-white">Pre-launch</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="mt-12" id="about">
-        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-200">About Virtue Reality &amp; CYHOP</p>
-        <h2 className="mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-white lg:text-4xl">
-          Own the mission: trusted digital experiences for players and families.
-        </h2>
-        <div className="mt-7 grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
-          <div className="overflow-hidden rounded-[26px] border border-white/10 bg-slate-950/40">
+          <div className="relative aspect-[1068/1023] overflow-hidden rounded-[26px] border border-fuchsia-500/70">
             <Image
-              alt="Virtue Reality and CYHOP scroll artwork"
-              className="h-full w-full object-cover"
-              height={1024}
-              src="/images/virtue-reality-cyhop-scroll.jpg"
-              width={768}
+              alt="Virtue Reality governed AI gaming safety visual"
+              className="object-cover"
+              fill
+              priority
+              src="/images/VR Overview visual.jpg"
+              sizes="(max-width: 1024px) 100vw, 55vw"
             />
           </div>
-          <article className="rounded-[26px] border border-white/10 bg-slate-950/60 p-6 text-white shadow-[0_20px_60px_rgba(2,6,23,0.35)]">
-            <p className="text-sm leading-7 text-slate-300">
-              Virtue Reality builds the technology. CYHOP gives the work a culture and a public identity. Together they
-              align product execution and community momentum around one clear demand: safer online spaces.
+        </div>
+
+        <div className="mt-6 mb-8 grid w-full gap-3 sm:grid-cols-3" aria-label="Virtue Reality focus areas">
+          <div className="flex min-h-12 items-center justify-center rounded-2xl bg-[#7025b6] px-4 py-3 text-center text-sm font-bold uppercase text-white shadow-[0_8px_20px_rgba(112,37,182,0.25)]">
+            TrustTech
+          </div>
+          <div className="flex min-h-12 items-center justify-center rounded-2xl bg-[#c43bd1] px-4 py-3 text-center text-sm font-bold uppercase text-white shadow-[0_8px_20px_rgba(196,59,209,0.25)]">
+            Safe Gaming
+          </div>
+          <div className="flex min-h-12 items-center justify-center rounded-2xl bg-[#2ba8df] px-4 py-3 text-center text-sm font-bold uppercase text-white shadow-[0_8px_20px_rgba(43,168,223,0.25)]">
+            Private AI
+          </div>
+        </div>
+
+        <div className="max-w-5xl px-1 text-white" aria-labelledby="personal-urgent-heading">
+          <h2 id="personal-urgent-heading" className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            This Is Personal. This Is Urgent.
+          </h2>
+          <div className="mt-3 space-y-2 text-xl leading-relaxed sm:text-2xl">
+            <p>
+              Every day we wait, millions of children are subjected to experiences no parent would knowingly allow. Every
+              hour without intervention, someone&apos;s child is being targeted, harassed, or traumatized in ways that will
+              echo for years.
             </p>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li>• The Sentinel — AI protection for gamers.</li>
-              <li>• The Guardian — tools for parents and families.</li>
-              <li>• Tha Hall — community engagement and momentum layer.</li>
-            </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/docs/virtue-reality-cyhop-investor-manifesto.pdf"
-                target="_blank"
-                className="rounded-lg bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950"
-              >
-                Open manifesto
-              </Link>
-              <Link href="/story" className="rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white">
-                Go to story page
-              </Link>
-            </div>
-          </article>
+            <p>
+              Virtue Reality isn&apos;t just a product. It&apos;s a movement to reclaim cyberspace as a place of joy, creativity,
+              and genuine connection.
+            </p>
+            <p>We&apos;re currently in beta testing. Our AI is learning. Our community is growing. Our mission is clear.</p>
+          </div>
         </div>
       </section>
+
+      <section className="mt-12" id="overview-2"></section>
+
+      <section className="mt-12" id="about-2"></section>
 
       <section className="mt-12 rounded-[30px] border border-white/10 bg-slate-950/70 p-8 text-white shadow-[0_20px_60px_rgba(2,6,23,0.35)]" id="how-it-works">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-200">CYHOP path</p>
@@ -154,6 +119,7 @@ export default function HomePage() {
             </article>
           ))}
         </div>
+
       </section>
 
       <section className="mt-12" id="faq">
@@ -171,7 +137,7 @@ export default function HomePage() {
           <Link href="/faq" className="rounded-lg bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950">
             Full FAQ
           </Link>
-          <Link href="/offering" className="rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white">
+          <Link href="/investor-next-steps" className="rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white">
             Continue to offering
           </Link>
         </div>

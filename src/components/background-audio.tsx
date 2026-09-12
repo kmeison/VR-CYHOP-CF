@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const BACKGROUND_AUDIO_ID = "cyhop-background-audio";
 const BACKGROUND_TRACK = "/media/math-dont-lie.mp3";
 
 export function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pathname = usePathname();
   const [enabled, setEnabled] = useState(true);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -120,12 +122,19 @@ export function BackgroundAudio() {
       if (!audio.paused) {
         audio.pause();
       }
-      setIsPlaying(false);
       return;
     }
 
     syncBackgroundAudio();
   }, [enabled, syncBackgroundAudio]);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      syncBackgroundAudio();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname, syncBackgroundAudio]);
 
   return (
     <>

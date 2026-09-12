@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { NavShell } from "@/components/nav-shell";
-import { soundtrack, storyAssets } from "@/lib/investor-content";
+import { soundtrack, storyAssets, storyDeckSlides } from "@/lib/investor-content";
 
 export default function StoryPage() {
   return (
@@ -61,7 +61,14 @@ export default function StoryPage() {
               href="/docs/virtue-reality-cyhop-investor-manifesto.pdf"
               target="_blank"
             >
-              Open Manifesto PDF
+              Open presentation
+            </Link>
+            <Link
+              className="rounded-lg border border-white/15 px-4 py-2.5 text-sm font-semibold text-white"
+              href="/docs/virtue-reality-cyhop-investor-manifesto.pdf"
+              target="_blank"
+            >
+              Open manifesto PDF
             </Link>
             <Link href="/faq" className="rounded-lg border border-white/15 px-4 py-2.5 text-sm font-semibold text-white">
               Continue to FAQ
@@ -70,12 +77,64 @@ export default function StoryPage() {
         </article>
       </section>
 
+      <section className="mt-8 overflow-hidden rounded-[28px] border border-cyan-400/20 bg-slate-950/70 shadow-[0_25px_60px_rgba(15,23,42,0.45)]">
+        <div className="flex flex-col gap-3 border-b border-white/10 bg-slate-900/80 px-5 py-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-cyan-300">Investor deck</p>
+            <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">Story presentation</h2>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-300">
+            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1">Deck</span>
+            <span className="text-cyan-300">01</span>
+            <span className="text-slate-500">/</span>
+            <span>{storyDeckSlides.length}</span>
+          </div>
+        </div>
+
+        <div className="grid gap-4 p-4 lg:grid-cols-2 lg:p-5">
+          {storyDeckSlides.map((slide) => (
+            <article
+              key={slide.number}
+              className="min-h-[280px] rounded-[24px] border border-white/10 bg-[linear-gradient(135deg,rgba(15,23,42,0.96),rgba(8,13,20,0.94))] p-5 shadow-inner shadow-cyan-500/5"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/10 text-sm font-bold text-cyan-200">
+                    {slide.number}
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">Slide</span>
+                </div>
+                <span className="rounded-full border border-cyan-400/20 bg-cyan-500/5 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-200">
+                  Story
+                </span>
+              </div>
+
+              <div className="mt-6">
+                <h3 className="text-2xl font-semibold text-white md:text-[2rem]">{slide.title}</h3>
+                <p className="mt-2 text-sm font-medium text-cyan-200">{slide.subtitle}</p>
+              </div>
+
+              <p className="mt-4 text-sm leading-7 text-slate-300">{slide.description}</p>
+
+              <ul className="mt-5 space-y-2 text-sm text-slate-200">
+                {slide.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-3">
+                    <span className="mt-2 inline-block h-2.5 w-2.5 rounded-full bg-cyan-300" />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="mt-8 rounded-[24px] border border-white/10 bg-white p-6 text-slate-900 shadow-lg">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Story assets</p>
         <h2 className="mt-2 text-2xl font-semibold">The narrative toolkit.</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {storyAssets.map((asset) => (
-            <article key={asset.href} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <article key={`${asset.title}-${asset.type}`} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">{asset.type}</p>
               <h3 className="mt-2 text-lg font-semibold text-slate-900">{asset.title}</h3>
               <p className="mt-2 text-sm leading-7 text-slate-700">{asset.description}</p>

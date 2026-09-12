@@ -1,5 +1,5 @@
 {
-  "name": "black-harmony-ai-cmo",
+  "name": "cyhop",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "customizations": {
     "vscode": {
@@ -8,12 +8,11 @@
       },
       "extensions": [
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "Prisma.prisma"
+        "esbenp.prettier-vscode"
       ]
     }
   },
   "forwardPorts": [3000],
-  "postCreateCommand": "npm install && npm run prisma:generate",
+  "postCreateCommand": "npm install",
   "remoteUser": "node"
 }
