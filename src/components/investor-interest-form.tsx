@@ -40,16 +40,27 @@ export function InvestorInterestForm({
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      let result: any = null;
+      try {
+        result = await response.json();
+      } catch {
+        // Fallback if response is non-JSON
+      }
+
       if (!response.ok) {
-        setError(result.error?.formErrors?.join(", ") || result.error || "Unable to save your interest right now.");
+        setError(
+          result?.error?.formErrors?.join(", ") ||
+          result?.error ||
+          "Unable to save your interest right now. Please try again."
+        );
         setIsSubmitting(false);
         return;
       }
 
       event.currentTarget.reset();
       setMessage("Thank you. We will be in touch!");
-    } catch {
+    } catch (err) {
+      console.error("Form submission error:", err);
       setError("Network error. Please try again or reach out directly.");
     } finally {
       setIsSubmitting(false);
