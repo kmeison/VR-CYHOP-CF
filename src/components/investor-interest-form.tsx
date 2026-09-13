@@ -17,11 +17,12 @@ export function InvestorInterestForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setIsSubmitting(true);
     setMessage(null);
     setError(null);
 
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     const focus = String(form.get("focus") || "investor-updates").trim();
     const payload = {
       fullName: String(form.get("fullName") || "").trim(),
@@ -57,7 +58,7 @@ export function InvestorInterestForm({
         return;
       }
 
-      event.currentTarget.reset();
+      formElement?.reset();
       setMessage("Thank you. We will be in touch!");
     } catch (err) {
       console.error("Form submission error:", err);
