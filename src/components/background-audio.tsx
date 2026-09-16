@@ -10,6 +10,7 @@ export function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
+  const userPausedRef = useRef(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -152,13 +153,15 @@ export function BackgroundAudio() {
   }, [pauseBackgroundAudio, syncBackgroundAudio]);
 
   useEffect(() => {
+    userPausedRef.current = false;
     if (pathname === "/why-now") {
       const frame = window.requestAnimationFrame(() => {
         setEnabled(true);
       });
 
-      // Browser autoplay unlocker on first user interaction on the page
+      // Browser autoplay unlocker on first user interaction on the page if not user-paused
       const unlockAudio = () => {
+        if (userPausedRef.current) return;
         const audio = audioRef.current;
         if (audio && audio.paused) {
           audio.play().then(() => {
@@ -180,6 +183,11 @@ export function BackgroundAudio() {
         window.removeEventListener("keydown", unlockAudio);
         window.removeEventListener("click", unlockAudio);
       };
+    } else {
+      const frame = window.requestAnimationFrame(() => {
+        setEnabled(false);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
   }, [pathname]);
 
@@ -237,7 +245,15 @@ export function BackgroundAudio() {
         <button
           className="mt-2 w-full rounded-md bg-obsidian px-2 py-1 text-[10px] font-medium text-white transition hover:bg-obsidian/90 active:scale-95 sm:text-xs"
           onClick={() => {
-            setEnabled((current) => !current);
+            setEnabled((current) => {
+              const next = !current;
+              if (!next) {
+                userPausedRef.current = true;
+              } else {
+                userPausedRef.current = false;
+              }
+              return next;
+            });
             setAutoplayBlocked(false);
           }}
           type="button"

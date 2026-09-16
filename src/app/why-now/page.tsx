@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { NavShell } from "@/components/nav-shell";
 
@@ -54,7 +56,26 @@ export default function WhyNowPage() {
                     audio
                   </span>
                 </div>
-                <audio className="mt-2 w-full" controls preload="none" src={track.src} />
+                <audio
+                  className="mt-2 w-full"
+                  controls
+                  onPlay={(e) => {
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(new CustomEvent("cyhop:pause-bg-audio"));
+                    }
+                    const bgAudio = document.getElementById("cyhop-background-audio");
+                    if (bgAudio instanceof HTMLMediaElement && !bgAudio.paused) {
+                      bgAudio.pause();
+                    }
+                    document.querySelectorAll<HTMLMediaElement>("audio").forEach((other) => {
+                      if (other !== e.currentTarget && !other.paused) {
+                        other.pause();
+                      }
+                    });
+                  }}
+                  preload="none"
+                  src={track.src}
+                />
               </div>
             ))}
           </div>
