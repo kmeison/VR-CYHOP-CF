@@ -86,7 +86,7 @@ export function ProblemVideo({ src }: ProblemVideoProps) {
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 overflow-hidden border-y border-amber-400/30 bg-black/85 py-2.5 backdrop-blur-sm sm:bottom-8">
+      <div className="pointer-events-none absolute inset-x-0 bottom-14 z-10 overflow-hidden border-y border-amber-400/30 bg-black/85 py-2.5 backdrop-blur-sm sm:bottom-20">
         <div className="problem-warning-marquee flex items-center text-amber-300">
           <span className="px-6 text-sm font-bold uppercase tracking-[0.14em] sm:text-base md:text-lg">
             ⚠️ {WARNING_TEXT} &nbsp;&nbsp;•&nbsp;&nbsp;

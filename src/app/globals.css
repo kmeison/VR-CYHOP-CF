@@ -45,5 +45,5 @@ a {
 .problem-warning-marquee {
   display: flex;
   width: max-content;
-  animation: problem-banner-scroll 22s linear infinite;
+  animation: problem-banner-scroll 14s linear infinite;
 }
