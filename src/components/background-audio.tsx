@@ -33,7 +33,8 @@ export function BackgroundAudio() {
         element !== audio &&
         !element.paused &&
         !element.ended &&
-        (!element.muted || (element.tagName === "VIDEO" && element.hasAttribute("controls"))),
+        !element.muted &&
+        element.volume > 0,
     );
 
     if (!enabled || otherMediaPlaying) {
@@ -41,7 +42,6 @@ export function BackgroundAudio() {
         audio.pause();
       }
       setIsPlaying(false);
-      setAutoplayBlocked(false);
       return;
     }
 
@@ -56,7 +56,8 @@ export function BackgroundAudio() {
                 element !== audio &&
                 !element.paused &&
                 !element.ended &&
-                (!element.muted || (element.tagName === "VIDEO" && element.hasAttribute("controls"))),
+                !element.muted &&
+                element.volume > 0,
             );
             if (anotherIsPlaying || !enabled) {
               audio.pause();
@@ -95,6 +96,11 @@ export function BackgroundAudio() {
       }
 
       if (target === audio) {
+        return;
+      }
+
+      // Ignore muted background loop videos (like the one on /why-now)
+      if (target.muted || target.volume === 0) {
         return;
       }
 
@@ -149,9 +155,31 @@ export function BackgroundAudio() {
     if (pathname === "/why-now") {
       const frame = window.requestAnimationFrame(() => {
         setEnabled(true);
-        setAutoplayBlocked(false);
       });
-      return () => window.cancelAnimationFrame(frame);
+
+      // Browser autoplay unlocker on first user interaction on the page
+      const unlockAudio = () => {
+        const audio = audioRef.current;
+        if (audio && audio.paused) {
+          audio.play().then(() => {
+            setAutoplayBlocked(false);
+            setIsPlaying(true);
+          }).catch(() => {});
+        }
+      };
+
+      window.addEventListener("pointerdown", unlockAudio, { once: true });
+      window.addEventListener("touchstart", unlockAudio, { once: true });
+      window.addEventListener("keydown", unlockAudio, { once: true });
+      window.addEventListener("click", unlockAudio, { once: true });
+
+      return () => {
+        window.cancelAnimationFrame(frame);
+        window.removeEventListener("pointerdown", unlockAudio);
+        window.removeEventListener("touchstart", unlockAudio);
+        window.removeEventListener("keydown", unlockAudio);
+        window.removeEventListener("click", unlockAudio);
+      };
     }
   }, [pathname]);
 
