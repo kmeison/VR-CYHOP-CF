@@ -10,8 +10,11 @@ export function OverviewSizzleVideo({ src }: OverviewSizzleVideoProps) {
       className="h-auto w-full"
       controls
       onPlay={() => {
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("cyhop:pause-bg-audio"));
+        }
         const backgroundAudio = document.getElementById("cyhop-background-audio");
-        if (backgroundAudio instanceof HTMLAudioElement) {
+        if (backgroundAudio instanceof HTMLMediaElement && !backgroundAudio.paused) {
           backgroundAudio.pause();
         }
       }}

@@ -11,6 +11,13 @@ export function SolutionDemoVideo({ src }: SolutionDemoVideoProps) {
   const [soundEnabled, setSoundEnabled] = useState(false);
 
   const playDemoWithSound = (video: HTMLVideoElement) => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("cyhop:pause-bg-audio"));
+    }
+    const bgAudio = document.getElementById("cyhop-background-audio");
+    if (bgAudio instanceof HTMLMediaElement && !bgAudio.paused) {
+      bgAudio.pause();
+    }
     document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
       if (media !== video && !media.paused) {
         media.pause();
@@ -28,6 +35,13 @@ export function SolutionDemoVideo({ src }: SolutionDemoVideoProps) {
         className="block h-auto w-full"
         controls
         onPlay={(event) => {
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("cyhop:pause-bg-audio"));
+          }
+          const bgAudio = document.getElementById("cyhop-background-audio");
+          if (bgAudio instanceof HTMLMediaElement && !bgAudio.paused) {
+            bgAudio.pause();
+          }
           document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
             if (media !== event.currentTarget && !media.paused) {
               media.pause();

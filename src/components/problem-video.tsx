@@ -13,8 +13,11 @@ export function ProblemVideo({ src }: ProblemVideoProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const stopBackgroundMusicAndOtherMedia = (currentVideo?: HTMLVideoElement | null) => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("cyhop:pause-bg-audio"));
+    }
     const bgAudio = document.getElementById("cyhop-background-audio");
-    if (bgAudio instanceof HTMLAudioElement && !bgAudio.paused) {
+    if (bgAudio instanceof HTMLMediaElement && !bgAudio.paused) {
       bgAudio.pause();
     }
     document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
@@ -36,6 +39,7 @@ export function ProblemVideo({ src }: ProblemVideoProps) {
       .play()
       .then(() => {
         setIsPlaying(true);
+        stopBackgroundMusicAndOtherMedia(video);
       })
       .catch((err) => {
         console.warn("Playback error:", err);
@@ -57,6 +61,17 @@ export function ProblemVideo({ src }: ProblemVideoProps) {
           stopBackgroundMusicAndOtherMedia(event.currentTarget);
           event.currentTarget.muted = false;
           setIsPlaying(true);
+        }}
+        onPlaying={(event) => {
+          stopBackgroundMusicAndOtherMedia(event.currentTarget);
+        }}
+        onTimeUpdate={(event) => {
+          if (!event.currentTarget.paused && !event.currentTarget.ended) {
+            const bgAudio = document.getElementById("cyhop-background-audio");
+            if (bgAudio instanceof HTMLMediaElement && !bgAudio.paused) {
+              bgAudio.pause();
+            }
+          }
         }}
         playsInline
         preload="metadata"

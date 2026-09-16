@@ -13,6 +13,14 @@ export function BackgroundAudio() {
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const pauseBackgroundAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio && !audio.paused) {
+      audio.pause();
+    }
+    setIsPlaying(false);
+  }, []);
+
   const syncBackgroundAudio = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) {
@@ -21,7 +29,11 @@ export function BackgroundAudio() {
 
     const mediaElements = Array.from(document.querySelectorAll<HTMLMediaElement>("audio, video"));
     const otherMediaPlaying = mediaElements.some(
-      (element) => element !== audio && !element.paused && !element.ended,
+      (element) =>
+        element !== audio &&
+        !element.paused &&
+        !element.ended &&
+        (!element.muted || (element.tagName === "VIDEO" && element.hasAttribute("controls"))),
     );
 
     if (!enabled || otherMediaPlaying) {
@@ -38,6 +50,19 @@ export function BackgroundAudio() {
       if (playRequest) {
         void playRequest
           .then(() => {
+            const currentMedia = Array.from(document.querySelectorAll<HTMLMediaElement>("audio, video"));
+            const anotherIsPlaying = currentMedia.some(
+              (element) =>
+                element !== audio &&
+                !element.paused &&
+                !element.ended &&
+                (!element.muted || (element.tagName === "VIDEO" && element.hasAttribute("controls"))),
+            );
+            if (anotherIsPlaying || !enabled) {
+              audio.pause();
+              setIsPlaying(false);
+              return;
+            }
             setAutoplayBlocked(false);
             setIsPlaying(true);
           })
@@ -84,6 +109,10 @@ export function BackgroundAudio() {
       syncBackgroundAudio();
     };
 
+    const handleCustomPause = () => {
+      pauseBackgroundAudio();
+    };
+
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         syncBackgroundAudio();
@@ -94,7 +123,9 @@ export function BackgroundAudio() {
     audio.addEventListener("play", handleAudioState);
     audio.addEventListener("pause", handleAudioState);
     audio.addEventListener("ended", handleAudioState);
+    window.addEventListener("cyhop:pause-bg-audio", handleCustomPause);
     document.addEventListener("play", handleMediaLifecycle, true);
+    document.addEventListener("playing", handleMediaLifecycle, true);
     document.addEventListener("pause", handleMediaLifecycle, true);
     document.addEventListener("ended", handleMediaLifecycle, true);
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -105,12 +136,14 @@ export function BackgroundAudio() {
       audio.removeEventListener("play", handleAudioState);
       audio.removeEventListener("pause", handleAudioState);
       audio.removeEventListener("ended", handleAudioState);
+      window.removeEventListener("cyhop:pause-bg-audio", handleCustomPause);
       document.removeEventListener("play", handleMediaLifecycle, true);
+      document.removeEventListener("playing", handleMediaLifecycle, true);
       document.removeEventListener("pause", handleMediaLifecycle, true);
       document.removeEventListener("ended", handleMediaLifecycle, true);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [syncBackgroundAudio]);
+  }, [pauseBackgroundAudio, syncBackgroundAudio]);
 
   useEffect(() => {
     const audio = audioRef.current;
