@@ -27,12 +27,23 @@ export function NavShell({ children }: NavShellProps) {
               </Link>
             </div>
             <div className="text-lg">
-              <nav className="flex flex-wrap gap-4 font-medium">
-                {investorLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="text-white/80 hover:text-cyan">
-                    {link.label}
-                  </Link>
-                ))}
+              <nav className="flex flex-wrap items-center gap-4 font-medium">
+                {investorLinks.map((link) => {
+                  const isSolution = link.href === "/solution";
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={
+                        isSolution
+                          ? "gold-pulse inline-block text-xl font-extrabold text-[#F5B041] hover:text-[#F39C12]"
+                          : "text-white/80 hover:text-cyan"
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
               </nav>
             </div>
           </div>

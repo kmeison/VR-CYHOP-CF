@@ -47,3 +47,21 @@ a {
   width: max-content;
   animation: problem-banner-scroll 14s linear infinite;
 }
+
+@keyframes subtle-gold-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.45), 0 0 20px rgba(234, 179, 8, 0.25);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.04);
+    text-shadow: 0 0 18px rgba(245, 158, 11, 0.8), 0 0 30px rgba(234, 179, 8, 0.45);
+  }
+}
+
+.gold-pulse {
+  animation: subtle-gold-pulse 2.4s ease-in-out infinite;
+}

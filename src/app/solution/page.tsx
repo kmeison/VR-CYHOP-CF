@@ -122,7 +122,9 @@ export default function SolutionPage() {
   return (
     <NavShell>
       <div className="mb-6">
-        <h1 className="text-4xl font-semibold tracking-tight text-[#d77bff] sm:text-5xl">THE SOLUTION</h1>
+        <h1 className="gold-pulse inline-block text-5xl font-extrabold tracking-tight text-[#F5B041] sm:text-6xl">
+          THE SOLUTION
+        </h1>
       </div>
 
       <div className="mb-8 overflow-hidden rounded-[26px] border border-white/10 bg-black shadow-[0_20px_60px_rgba(2,6,23,0.35)]">
