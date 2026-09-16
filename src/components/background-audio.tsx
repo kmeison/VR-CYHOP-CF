@@ -146,6 +146,16 @@ export function BackgroundAudio() {
   }, [pauseBackgroundAudio, syncBackgroundAudio]);
 
   useEffect(() => {
+    if (pathname === "/why-now") {
+      const frame = window.requestAnimationFrame(() => {
+        setEnabled(true);
+        setAutoplayBlocked(false);
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) {
       return;
