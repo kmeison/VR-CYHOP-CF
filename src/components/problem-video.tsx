@@ -6,50 +6,101 @@ type ProblemVideoProps = {
   src: string;
 };
 
+const WARNING_TEXT = "GRAPHIC LANGUAGE WARNING  - BE IN A SAFE PLACE TO LISTEN INTENTLY";
+
 export function ProblemVideo({ src }: ProblemVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const enableSound = () => {
+  const stopBackgroundMusicAndOtherMedia = (currentVideo?: HTMLVideoElement | null) => {
+    const bgAudio = document.getElementById("cyhop-background-audio");
+    if (bgAudio instanceof HTMLAudioElement && !bgAudio.paused) {
+      bgAudio.pause();
+    }
+    document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
+      if (media !== currentVideo && !media.paused) {
+        media.pause();
+      }
+    });
+  };
+
+  const handlePlayWithSound = () => {
     const video = videoRef.current;
     if (!video) {
       return;
     }
 
+    stopBackgroundMusicAndOtherMedia(video);
     video.muted = false;
-    setSoundEnabled(true);
-    void video.play();
+    void video
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch((err) => {
+        console.warn("Playback error:", err);
+      });
   };
 
   return (
     <div className="relative overflow-hidden bg-black">
       <video
-        autoPlay
         className="block h-auto w-full"
         controls
-        muted
-        ref={videoRef}
-        onEnded={(event) => {
-          event.currentTarget.pause();
+        onEnded={() => {
+          setIsPlaying(false);
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+        }}
+        onPlay={(event) => {
+          stopBackgroundMusicAndOtherMedia(event.currentTarget);
+          event.currentTarget.muted = false;
+          setIsPlaying(true);
         }}
         playsInline
-        preload="auto"
+        preload="metadata"
+        ref={videoRef}
       >
         <source src={src} type="video/mp4" />
       </video>
-      {!soundEnabled && (
-        <button
-          className="absolute right-4 top-4 rounded-lg border border-white/30 bg-black/70 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white backdrop-blur"
-          onClick={enableSound}
-          type="button"
-        >
-          Enable sound
-        </button>
+
+      {!isPlaying && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+          <button
+            aria-label="Play video with sound"
+            className="group flex flex-col items-center gap-3 rounded-2xl border border-white/30 bg-black/80 px-7 py-5 shadow-[0_0_40px_rgba(215,123,255,0.45)] backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-[#d77bff] hover:bg-black/95"
+            onClick={handlePlayWithSound}
+            type="button"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#d77bff] text-slate-950 shadow-lg transition-transform group-hover:scale-110">
+              <svg className="ml-1 h-8 w-8 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-white">Play Video</p>
+              <p className="text-xs font-medium text-slate-300">Click to listen with audio</p>
+            </div>
+          </button>
+        </div>
       )}
-      <div className="pointer-events-none absolute inset-x-0 bottom-1/4 overflow-hidden bg-black/65 py-2">
-        <p className="why-now-caption w-max whitespace-nowrap px-4 text-xl font-bold uppercase tracking-[0.14em] text-white sm:text-2xl">
-          CAUTION actual event! Be cafeful of your surroundings but listen intently
-        </p>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 overflow-hidden border-y border-amber-400/30 bg-black/85 py-2.5 backdrop-blur-sm sm:bottom-8">
+        <div className="problem-warning-marquee flex items-center text-amber-300">
+          <span className="px-6 text-sm font-bold uppercase tracking-[0.14em] sm:text-base md:text-lg">
+            ⚠️ {WARNING_TEXT} &nbsp;&nbsp;•&nbsp;&nbsp;
+          </span>
+          <span className="px-6 text-sm font-bold uppercase tracking-[0.14em] sm:text-base md:text-lg">
+            ⚠️ {WARNING_TEXT} &nbsp;&nbsp;•&nbsp;&nbsp;
+          </span>
+          <span className="px-6 text-sm font-bold uppercase tracking-[0.14em] sm:text-base md:text-lg">
+            ⚠️ {WARNING_TEXT} &nbsp;&nbsp;•&nbsp;&nbsp;
+          </span>
+          <span className="px-6 text-sm font-bold uppercase tracking-[0.14em] sm:text-base md:text-lg">
+            ⚠️ {WARNING_TEXT} &nbsp;&nbsp;•&nbsp;&nbsp;
+          </span>
+        </div>
       </div>
     </div>
   );

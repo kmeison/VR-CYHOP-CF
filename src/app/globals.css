@@ -31,3 +31,19 @@ a {
 .why-now-caption {
   animation: why-now-caption-scroll 32s linear infinite;
 }
+
+@keyframes problem-banner-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.problem-warning-marquee {
+  display: flex;
+  width: max-content;
+  animation: problem-banner-scroll 22s linear infinite;
+}
