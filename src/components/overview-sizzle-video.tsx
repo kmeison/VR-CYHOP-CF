@@ -11,6 +11,7 @@ export function OverviewSizzleVideo({ src }: OverviewSizzleVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showScrollPrompt, setShowScrollPrompt] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -27,6 +28,11 @@ export function OverviewSizzleVideo({ src }: OverviewSizzleVideoProps) {
       });
     }
 
+    // Show translucent scroll arrows on the far right 10 seconds after start
+    const timer = setTimeout(() => {
+      setShowScrollPrompt(true);
+    }, 10000);
+
     const handleFullscreenChange = () => {
       const isFull = !!(
         document.fullscreenElement ||
@@ -39,6 +45,7 @@ export function OverviewSizzleVideo({ src }: OverviewSizzleVideoProps) {
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 
     return () => {
+      clearTimeout(timer);
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
       document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
     };
@@ -185,6 +192,47 @@ export function OverviewSizzleVideo({ src }: OverviewSizzleVideoProps) {
           )}
         </button>
       </div>
+
+      {/* Translucent Scroll Prompt on the far right after 10 seconds */}
+      {showScrollPrompt && !isFullscreen && (
+        <button
+          aria-label="Scroll down to explore"
+          className="group absolute bottom-1/4 right-3 z-20 flex flex-col items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-2.5 py-4 text-white/70 shadow-lg backdrop-blur-sm transition-all duration-500 hover:border-cyan hover:bg-black/70 hover:text-white sm:right-6 sm:px-3 sm:py-5"
+          onClick={() => {
+            const overviewSection = document.getElementById("overview");
+            if (overviewSection) {
+              overviewSection.scrollIntoView({ behavior: "smooth" });
+            } else {
+              window.scrollBy({ top: window.innerHeight * 0.75, behavior: "smooth" });
+            }
+          }}
+          type="button"
+        >
+          <span className="writing-mode-vertical text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 transition group-hover:text-cyan sm:text-xs">
+            SCROLL
+          </span>
+          <div className="flex flex-col items-center -space-y-2 pt-1 text-cyan/80 transition group-hover:text-cyan">
+            <svg
+              className="h-5 w-5 animate-bounce transition-transform group-hover:scale-110 sm:h-6 sm:w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+            <svg
+              className="h-5 w-5 animate-bounce opacity-60 transition-transform [animation-delay:150ms] group-hover:scale-110 sm:h-6 sm:w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+      )}
     </div>
   );
 }
