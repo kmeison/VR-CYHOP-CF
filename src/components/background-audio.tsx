@@ -172,27 +172,39 @@ export function BackgroundAudio() {
   return (
     <>
       <audio id={BACKGROUND_AUDIO_ID} loop preload="auto" ref={audioRef} src={BACKGROUND_TRACK} />
-      <div className="fixed bottom-4 right-4 z-50 rounded-xl border border-black/10 bg-white/95 p-3 shadow-lg backdrop-blur">
-        <p className="text-xs font-semibold uppercase tracking-wide text-obsidian/60">Background audio</p>
-        <p className="mt-1 text-sm font-medium text-obsidian">Math Don&apos;t Lie</p>
-        <p className="mt-1 text-xs text-obsidian/65">
+      <div className="fixed bottom-3 right-3 z-50 w-[180px] rounded-lg border border-black/10 bg-white/95 p-2 shadow-md backdrop-blur sm:bottom-4 sm:right-4 sm:w-[210px] sm:rounded-xl sm:p-2.5">
+        <div className="flex items-center justify-between gap-1">
+          <p className="text-[9px] font-semibold uppercase tracking-wider text-obsidian/60 sm:text-[10px]">
+            Background audio
+          </p>
+          <span
+            className={`inline-block h-1.5 w-1.5 rounded-full transition-colors ${
+              isPlaying ? "animate-pulse bg-emerald-500" : "bg-slate-400"
+            }`}
+            title={isPlaying ? "Playing" : "Paused"}
+          />
+        </div>
+        <p className="mt-0.5 text-xs font-semibold leading-tight text-obsidian sm:text-sm">
+          Math Don&apos;t Lie
+        </p>
+        <p className="mt-0.5 text-[9px] leading-tight text-obsidian/65 sm:text-[10px]">
           {enabled
             ? isPlaying
-              ? "Playing until another song or video takes over."
+              ? "Playing until another audio/video takes over."
               : autoplayBlocked
-                ? "Press play if your browser blocked autoplay."
-                : "Waiting for the page to allow playback."
+                ? "Press play if blocked by browser."
+                : "Waiting for playback."
             : "Paused by viewer choice."}
         </p>
         <button
-          className="mt-3 rounded-lg bg-obsidian px-3 py-2 text-xs font-semibold text-white"
+          className="mt-2 w-full rounded-md bg-obsidian px-2 py-1 text-[10px] font-medium text-white transition hover:bg-obsidian/90 active:scale-95 sm:text-xs"
           onClick={() => {
             setEnabled((current) => !current);
             setAutoplayBlocked(false);
           }}
           type="button"
         >
-          {enabled ? "Pause background music" : "Play background music"}
+          {enabled ? "Pause music" : "Play music"}
         </button>
       </div>
     </>
