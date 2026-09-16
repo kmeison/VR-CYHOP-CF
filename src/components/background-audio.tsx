@@ -9,7 +9,7 @@ const BACKGROUND_TRACK = "/media/math-dont-lie.mp3";
 export function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const pathname = usePathname();
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -194,7 +194,7 @@ export function BackgroundAudio() {
               : autoplayBlocked
                 ? "Press play if blocked by browser."
                 : "Waiting for playback."
-            : "Paused by viewer choice."}
+            : "Click play to listen."}
         </p>
         <button
           className="mt-2 w-full rounded-md bg-obsidian px-2 py-1 text-[10px] font-medium text-white transition hover:bg-obsidian/90 active:scale-95 sm:text-xs"
